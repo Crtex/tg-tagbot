@@ -10,7 +10,7 @@ Built with TypeScript using the [Telegraf](https://github.com/telegraf/telegraf)
 - `/addtag <tag>` — assign a tag to yourself
 - `/removetag <tag>` — remove a tag from yourself
 - `/mytags` — view your current tags
-- `/pingtag <tag>` — mention all users with that tag
+- `/ping <tag>` — mention all users with that tag
 
 ---
 

@@ -11,7 +11,7 @@ const bot = new Telegraf(token);
 
 bot.start((ctx) =>
   ctx.reply(
-    "Hey! I am a bot for managing tags. Use the commands /addtag, /removetag, /mytags, /pingtag"
+    "Hey! I am a bot for managing tags. Use the commands /addtag, /removetag, /mytags, /ping"
   )
 );
 
@@ -43,17 +43,20 @@ bot.command("mytags", (ctx) => {
 });
 
 // /pingtag gamer
-bot.command("pingtag", async (ctx) => {
-  const tag = ctx.message.text.split(" ")[1];
-  if (!tag) return ctx.reply("Specify a tag: /pingtag <tag>");
+bot.command('ping', async (ctx) => {
+  const tag = ctx.message.text.split(' ')[1];
+  if (!tag) return ctx.reply('Specify a tag: /pingtag gamer');
 
   const users = getUsersByTag(tag);
   if (users.length === 0) {
     return ctx.reply(`No users found with tag "${tag}".`);
   }
 
-  const mentions = users.map((u) => `@${u.username}`).join(" ");
-  await ctx.reply(`Pinging tag "${tag}": ${mentions}`);
+  const mentions = users.map(user => {
+    return `[${user.username ?? 'user'}](tg://user?id=${user.id})`;
+  }).join(' ');
+
+  await ctx.replyWithMarkdownV2(`🔔 *Tag "${tag}":* ${mentions}`);
 });
 
 export default bot;
