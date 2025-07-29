@@ -1,1 +1,1 @@
-# tg-rolebot
+# tg-tagbot
