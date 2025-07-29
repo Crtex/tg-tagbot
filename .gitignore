@@ -1,0 +1,8 @@
+# Contains all dependencies
+node_modules
+
+# Replace as required with your build location
+/build
+
+# Visual Studio Code configuration
+.vscode/
