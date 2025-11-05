@@ -6,6 +6,7 @@ import {
   getUserTags,
   getUsersByTag
 } from './data/store';
+import { escapeMarkdown } from './utils/escape-markdown';
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ if (!token) throw new Error('BOT_TOKEN not set');
 const bot = new Telegraf(token);
 
 bot.start((ctx) => {
-  ctx.reply('👋 Hi! I help manage roles (tags). Use /addtag, /removetag, /mytags, /pingtag.');
+  ctx.reply('👋 Hi! I help manage roles (tags). Use /addtag, /removetag, /mytags, /ping.');
 });
 
 // /addtag gamer
@@ -66,10 +67,13 @@ bot.command('ping', (ctx) => {
   }
 
   const mentions = users.map(user => {
-    return `[${user.username ?? 'user'}](tg://user?id=${user.id})`;
+    const name = escapeMarkdown(user.username ?? 'user');
+    return `[${name}](tg://user?id=${user.id})`;
   }).join(' ');
 
-  ctx.replyWithMarkdownV2(`🔔 *${tag}*: ${mentions}`);
+  const safeTag = escapeMarkdown(tag);
+
+  ctx.replyWithMarkdownV2(`🔔 *${safeTag}*: ${mentions}`);
 });
 
 export default bot;
