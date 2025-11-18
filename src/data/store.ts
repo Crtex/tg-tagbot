@@ -34,6 +34,12 @@ export function addTag(chatId: number, tag: string, user: { id: number; username
   }
 }
 
+export function listTags(chatId: number): string[] {
+  if (!db[chatId]) return [];
+
+  return Object.keys(db[chatId]);
+}
+
 export function removeTag(chatId: number, tag: string, userId: number) {
   if (db[chatId] && db[chatId][tag]) {
     db[chatId][tag] = db[chatId][tag].filter(u => u.id !== userId);

@@ -4,7 +4,8 @@ import {
   addTag,
   removeTag,
   getUserTags,
-  getUsersByTag
+  getUsersByTag,
+  listTags
 } from './data/store';
 import { escapeMarkdown } from './utils/escape-markdown';
 
@@ -51,6 +52,17 @@ bot.command('mytags', (ctx) => {
     ctx.reply('😕 You have no tags in this chat.');
   } else {
     ctx.reply(`🏷 Your tags in this chat: ${tags.join(', ')}`);
+  }
+});
+
+bot.command("alltags", (ctx) => {
+  const chatId = ctx.chat.id;
+  const tags = listTags(chatId);
+  
+  if (tags.length === 0) {
+    ctx.reply('😕 There are no tags in this chat.');
+  } else {
+    ctx.reply(`🏷 All tags in this chat: ${tags.join(', ')}`);
   }
 });
 
